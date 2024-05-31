@@ -1,8 +1,10 @@
 package com.management.hotels.infrastructure.adapters.web;
 
-import com.management.hotels.application.dtos.RoomDto;
 import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.requests.RoomRequest;
+import com.management.hotels.application.dtos.responses.RoomResponse;
 import com.management.hotels.application.usecases.rooms.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,32 +26,32 @@ public class RoomController {
     private final DeleteRoomUseCase deleteRoomUseCase;
 
     @GetMapping
-    public ResponseEntity<List<RoomDto>> getAllRooms() {
+    public ResponseEntity<List<RoomResponse>> getAllRooms() {
         return ResponseEntity.ok(getAllRoomsUseCase.execute());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long id) {
+    public ResponseEntity<RoomResponse> getRoomById(@PathVariable Long id) {
         return ResponseEntity.ok(getRoomByIdUseCase.execute(id));
     }
 
     @GetMapping("/hotel/{hotelId}")
-    public ResponseEntity<List<RoomDto>> getRoomsByHotelId(@PathVariable Long hotelId) {
+    public ResponseEntity<List<RoomResponse>> getRoomsByHotelId(@PathVariable Long hotelId) {
         return ResponseEntity.ok(getRoomsByHotelIdUseCase.execute(hotelId));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomDto) {
-        return ResponseEntity.ok(createRoomUseCase.execute(roomDto));
+    public ResponseEntity<RoomResponse> createRoom(@Valid @RequestBody RoomRequest roomRequest) {
+        return ResponseEntity.ok(createRoomUseCase.execute(roomRequest));
     }
 
     @PatchMapping("/{id}/enable")
-    public ResponseEntity<RoomDto> enableRoom(@PathVariable Long roomId, @RequestParam StatusDto statusDto) {
+    public ResponseEntity<RoomResponse> enableRoom(@PathVariable Long roomId, @RequestParam StatusDto statusDto) {
         return ResponseEntity.ok(updateRoomStatusUseCase.execute(roomId, statusDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDto> updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDetails) {
+    public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long id, @Valid @RequestBody RoomRequest roomDetails) {
         return ResponseEntity.ok(updateRoomUseCase.execute(id, roomDetails));
     }
 

@@ -1,11 +1,12 @@
 package com.management.hotels.application.services;
 
-import com.management.hotels.application.dtos.ReservationDto;
-import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.enums.StateDto;
+import com.management.hotels.application.dtos.requests.ReservationRequest;
+import com.management.hotels.application.dtos.responses.ReservationResponse;
 import com.management.hotels.domain.entities.Reservation;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.User;
-import com.management.hotels.domain.entities.enums.Status;
+import com.management.hotels.domain.entities.enums.State;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.ReservationRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,37 +21,37 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    private final GenericMapper<ReservationDto, Reservation> reservationMapper;
-    private final GenericMapper<StatusDto, Status> statusMapper;
+    private final GenericMapper<ReservationRequest, ReservationResponse, Reservation> reservationMapper;
+    private final GenericMapper<StateDto, StateDto, State> stateMapper;
 
-    public ReservationDto createReservation(ReservationDto reservationDto) {
-        Reservation reservation = reservationMapper.toEntity(reservationDto);
+    public ReservationResponse createReservation(ReservationRequest reservationRequest) {
+        Reservation reservation = reservationMapper.toEntity(reservationRequest);
         return reservationMapper.toDto(reservationRepository.save(reservation));
     }
 
-    public List<ReservationDto> getReservationsByRoom(Long roomId) {
+    public List<ReservationResponse> getReservationsByRoom(Long roomId) {
         Room room = new Room();
         room.setRoomId(roomId);
         return reservationRepository.findByRoom(room).stream().map(reservationMapper::toDto).collect(Collectors.toList());
     }
 
-    public List<ReservationDto> getReservationsByTraveler(Long travelerId) {
+    public List<ReservationResponse> getReservationsByTraveler(Long travelerId) {
         User traveler = new User();
         traveler.setUserId(travelerId);
         return reservationRepository.findByTraveler(traveler).stream().map(reservationMapper::toDto).collect(Collectors.toList());
     }
 
-    public List<ReservationDto> getAllReservations() {
+    public List<ReservationResponse> getAllReservations() {
         return reservationRepository.findAll().stream().map(reservationMapper::toDto).collect(Collectors.toList());
     }
 
-    public ReservationDto getReservationById(Long id) {
+    public ReservationResponse getReservationById(Long id) {
         return reservationMapper.toDto(reservationRepository.findById(id));
     }
 
-    public ReservationDto updateReservationStatus(Long reservationId, StatusDto statusDto) {
+    public ReservationResponse updateReservationStatus(Long reservationId, StateDto stateDto) {
         Reservation reservation = reservationRepository.findById(reservationId);
-        reservation.setStatus(statusMapper.toEntity(statusDto));
+        reservation.setState(stateMapper.toEntity(stateDto));
         return reservationMapper.toDto(reservationRepository.save(reservation));
     }
 

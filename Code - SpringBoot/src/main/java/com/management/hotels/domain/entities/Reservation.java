@@ -1,6 +1,6 @@
 package com.management.hotels.domain.entities;
 
-import com.management.hotels.domain.entities.enums.Status;
+import com.management.hotels.domain.entities.enums.State;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +42,7 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private State state;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Guest> guests;

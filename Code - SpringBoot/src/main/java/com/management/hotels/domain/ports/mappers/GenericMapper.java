@@ -1,9 +1,9 @@
 package com.management.hotels.domain.ports.mappers;
 
-public interface GenericMapper<Dto, Entity> {
+public interface GenericMapper<RequestDto, ResponseDto, Entity> {
 
-    Dto toDto(Entity entity);
+    ResponseDto toDto(Entity entity);
 
-    Entity toEntity(Dto dto);
+    Entity toEntity(RequestDto requestDto);
 
 }

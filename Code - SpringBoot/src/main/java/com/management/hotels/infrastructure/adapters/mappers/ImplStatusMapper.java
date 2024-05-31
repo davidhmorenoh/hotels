@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ImplStatusMapper implements GenericMapper<StatusDto, Status> {
+public class ImplStatusMapper implements GenericMapper<StatusDto, StatusDto, Status> {
 
     private final ModelMapper modelMapper;
 

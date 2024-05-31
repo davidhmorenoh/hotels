@@ -1,4 +1,10 @@
 package com.management.hotels.application.dtos.enums;
 
-public enum StatusDto {
+import java.io.Serializable;
+
+public enum StatusDto implements Serializable {
+
+    Enabled,
+    Disabled
+
 }

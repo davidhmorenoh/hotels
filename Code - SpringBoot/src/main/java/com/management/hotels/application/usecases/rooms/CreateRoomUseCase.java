@@ -1,6 +1,7 @@
 package com.management.hotels.application.usecases.rooms;
 
-import com.management.hotels.application.dtos.RoomDto;
+import com.management.hotels.application.dtos.requests.RoomRequest;
+import com.management.hotels.application.dtos.responses.RoomResponse;
 import com.management.hotels.application.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,8 @@ public class CreateRoomUseCase {
 
     private final RoomService roomService;
 
-    public RoomDto execute(RoomDto roomDto) {
-        return roomService.createRoom(roomDto);
+    public RoomResponse execute(RoomRequest roomRequest) {
+        return roomService.createRoom(roomRequest);
     }
 
 }

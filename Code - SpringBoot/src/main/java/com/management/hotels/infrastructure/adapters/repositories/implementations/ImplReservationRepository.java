@@ -4,8 +4,8 @@ import com.management.hotels.domain.entities.Reservation;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.exceptions.ReservationNotFoundException;
-import com.management.hotels.infrastructure.adapters.repositories.jpas.ReservationJpa;
 import com.management.hotels.domain.ports.repositories.ReservationRepository;
+import com.management.hotels.infrastructure.adapters.repositories.jpas.ReservationJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

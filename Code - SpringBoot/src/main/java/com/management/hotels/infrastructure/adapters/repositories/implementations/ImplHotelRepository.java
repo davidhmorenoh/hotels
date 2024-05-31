@@ -3,8 +3,8 @@ package com.management.hotels.infrastructure.adapters.repositories.implementatio
 import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.exceptions.HotelNotFoundException;
-import com.management.hotels.infrastructure.adapters.repositories.jpas.HotelJpa;
 import com.management.hotels.domain.ports.repositories.HotelRepository;
+import com.management.hotels.infrastructure.adapters.repositories.jpas.HotelJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

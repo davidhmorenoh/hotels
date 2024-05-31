@@ -1,6 +1,6 @@
 package com.management.hotels.application.usecases.reservations;
 
-import com.management.hotels.application.dtos.ReservationDto;
+import com.management.hotels.application.dtos.responses.ReservationResponse;
 import com.management.hotels.application.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class GetReservationsByRoomUseCase {
 
     private final ReservationService reservationService;
 
-    public List<ReservationDto> execute(Long roomId) {
+    public List<ReservationResponse> execute(Long roomId) {
         return reservationService.getReservationsByRoom(roomId);
     }
 

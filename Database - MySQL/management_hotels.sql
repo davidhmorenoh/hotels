@@ -85,7 +85,7 @@ CREATE TABLE `reservations` (
   `check_out_date` date NOT NULL,
   `number_of_guests` int(11) NOT NULL,
   `reservation_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('Confirmed','Cancelled') DEFAULT 'Confirmed'
+  `state` enum('Confirmed','Cancelled') DEFAULT 'Confirmed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

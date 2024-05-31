@@ -1,13 +1,14 @@
 package com.management.hotels.application.services;
 
-import com.management.hotels.application.dtos.HotelDto;
-import com.management.hotels.application.dtos.UserDto;
 import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.requests.HotelRequest;
+import com.management.hotels.application.dtos.responses.HotelResponse;
 import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.entities.enums.Status;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.HotelRepository;
+import com.management.hotels.domain.ports.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,46 +20,45 @@ import java.util.stream.Collectors;
 public class HotelService {
 
     private final HotelRepository hotelRepository;
+    private final UserRepository userRepository;
 
-    private final GenericMapper<HotelDto, Hotel> hotelMapper;
-    private final GenericMapper<StatusDto, Status> statusMapper;
-    private final GenericMapper<UserDto, User> userMapper;
+    private final GenericMapper<HotelRequest, HotelResponse, Hotel> hotelMapper;
+    private final GenericMapper<StatusDto, StatusDto, Status> statusMapper;
 
-    private final UserService userService;
-
-    public HotelDto createHotel(HotelDto hotelDto) {
-        Hotel hotel = hotelMapper.toEntity(hotelDto);
+    public HotelResponse createHotel(HotelRequest hotelRequest) {
+        Hotel hotel = hotelMapper.toEntity(hotelRequest);
         return hotelMapper.toDto(hotelRepository.save(hotel));
     }
 
-    public HotelDto updateHotel(Long id, HotelDto hotelDto) {
-        Hotel hotelToUpdate = hotelMapper.toEntity(hotelDto);
+    public HotelResponse updateHotel(Long id, HotelRequest hotelRequest) {
+        Status status = statusMapper.toEntity(hotelRequest.getStatus());
 
+        User createdBy = userRepository.findById(hotelRequest.getCreatedBy());
         Hotel hotelUpdated = hotelRepository.findById(id);
 
-        hotelUpdated.setHotelName(hotelToUpdate.getHotelName());
-        hotelUpdated.setCity(hotelToUpdate.getCity());
-        hotelUpdated.setAddress(hotelToUpdate.getAddress());
-        //hotelFound.setStatus(hotelToUpdate.getStatus());
-        //hotelFound.setCreatedBy(hotelToUpdate.getCreatedBy());
+        hotelUpdated.setHotelName(hotelRequest.getHotelName());
+        hotelUpdated.setCity(hotelRequest.getCity());
+        hotelUpdated.setAddress(hotelRequest.getAddress());
+        hotelUpdated.setStatus(status);
+        hotelUpdated.setCreatedBy(createdBy);
 
         return hotelMapper.toDto(hotelRepository.save(hotelUpdated));
     }
 
-    public List<HotelDto> getAllHotels() {
+    public List<HotelResponse> getAllHotels() {
         return hotelRepository.findAll().stream().map(hotelMapper::toDto).collect(Collectors.toList());
     }
 
-    public HotelDto getHotelById(Long id) {
+    public HotelResponse getHotelById(Long id) {
         return hotelMapper.toDto(hotelRepository.findById(id));
     }
 
-    public List<HotelDto> getHotelsByUserId(Long userId) {
-        UserDto userDto = userService.getUserById(userId);
-        return hotelRepository.findByCreatedBy(userMapper.toEntity(userDto)).stream().map(hotelMapper::toDto).collect(Collectors.toList());
+    public List<HotelResponse> getHotelsByUserId(Long userId) {
+        User user = userRepository.findById(userId);
+        return hotelRepository.findByCreatedBy(user).stream().map(hotelMapper::toDto).collect(Collectors.toList());
     }
 
-    public HotelDto updateHotelStatus(Long id, StatusDto statusDto) {
+    public HotelResponse updateHotelStatus(Long id, StatusDto statusDto) {
         Hotel hotel = hotelRepository.findById(id);
         hotel.setStatus(statusMapper.toEntity(statusDto));
         return hotelMapper.toDto(hotelRepository.save(hotel));

@@ -1,8 +1,10 @@
 package com.management.hotels.infrastructure.adapters.web;
 
-import com.management.hotels.application.dtos.ReservationDto;
-import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.enums.StateDto;
+import com.management.hotels.application.dtos.requests.ReservationRequest;
+import com.management.hotels.application.dtos.responses.ReservationResponse;
 import com.management.hotels.application.usecases.reservations.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,33 +25,33 @@ public class ReservationController {
     private final DeleteReservationUseCase deleteReservationUseCase;
 
     @GetMapping
-    public ResponseEntity<List<ReservationDto>> getAllReservations() {
+    public ResponseEntity<List<ReservationResponse>> getAllReservations() {
         return ResponseEntity.ok(getAllReservationsUseCase.execute());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDto> getReservationById(@PathVariable Long id) {
+    public ResponseEntity<ReservationResponse> getReservationById(@PathVariable Long id) {
         return ResponseEntity.ok(getReservationByIdUseCase.execute(id));
     }
 
     @GetMapping("/room/{roomId}")
-    public ResponseEntity<List<ReservationDto>> getReservationsByRoom(@PathVariable Long roomId) {
+    public ResponseEntity<List<ReservationResponse>> getReservationsByRoom(@PathVariable Long roomId) {
         return ResponseEntity.ok(getReservationsByRoomUseCase.execute(roomId));
     }
 
     @GetMapping("/traveler/{travelerId}")
-    public ResponseEntity<List<ReservationDto>> getReservationsByTraveler(@PathVariable Long travelerId) {
+    public ResponseEntity<List<ReservationResponse>> getReservationsByTraveler(@PathVariable Long travelerId) {
         return ResponseEntity.ok(getReservationsByTravelerUseCase.execute(travelerId));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ReservationDto> createReservation(@RequestBody ReservationDto reservationDto) {
-        return ResponseEntity.ok(createReservationUseCase.execute(reservationDto));
+    public ResponseEntity<ReservationResponse> createReservation(@Valid @RequestBody ReservationRequest reservationRequest) {
+        return ResponseEntity.ok(createReservationUseCase.execute(reservationRequest));
     }
 
     @PatchMapping("/status/{reservationId}")
-    public ResponseEntity<ReservationDto> updateReservationStatus(@PathVariable Long reservationId, @RequestParam StatusDto status) {
-        return ResponseEntity.ok(updateReservationStatusUseCase.execute(reservationId, status));
+    public ResponseEntity<ReservationResponse> updateReservationStatus(@PathVariable Long reservationId, @RequestParam StateDto state) {
+        return ResponseEntity.ok(updateReservationStatusUseCase.execute(reservationId, state));
     }
 
     @DeleteMapping("/{id}")

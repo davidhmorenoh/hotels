@@ -1,6 +1,7 @@
 package com.management.hotels.infrastructure.adapters.mappers;
 
-import com.management.hotels.application.dtos.HotelDto;
+import com.management.hotels.application.dtos.requests.HotelRequest;
+import com.management.hotels.application.dtos.responses.HotelResponse;
 import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,18 +10,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ImplHotelMapper implements GenericMapper<HotelDto, Hotel> {
+public class ImplHotelMapper implements GenericMapper<HotelRequest, HotelResponse, Hotel> {
 
     private final ModelMapper modelMapper;
 
     @Override
-    public HotelDto toDto(Hotel hotel) {
-        return modelMapper.map(hotel, HotelDto.class);
+    public HotelResponse toDto(Hotel hotel) {
+        return modelMapper.map(hotel, HotelResponse.class);
     }
 
     @Override
-    public Hotel toEntity(HotelDto hotelDto) {
-        return modelMapper.map(hotelDto, Hotel.class);
+    public Hotel toEntity(HotelRequest hotelRequest) {
+        return modelMapper.map(hotelRequest, Hotel.class);
     }
 
 }

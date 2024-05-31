@@ -1,7 +1,8 @@
 package com.management.hotels.application.services;
 
-import com.management.hotels.application.dtos.RoomDto;
 import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.requests.RoomRequest;
+import com.management.hotels.application.dtos.responses.RoomResponse;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.enums.Status;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
@@ -18,33 +19,33 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    private final GenericMapper<RoomDto, Room> roomMapper;
-    private final GenericMapper<StatusDto, Status> statusMapper;
+    private final GenericMapper<RoomRequest, RoomResponse, Room> roomMapper;
+    private final GenericMapper<StatusDto, StatusDto, Status> statusMapper;
 
-    public RoomDto createRoom(RoomDto roomDto) {
-        Room room = roomMapper.toEntity(roomDto);
+    public RoomResponse createRoom(RoomRequest roomRequest) {
+        Room room = roomMapper.toEntity(roomRequest);
         return roomMapper.toDto(roomRepository.save(room));
     }
 
-    public RoomDto getRoomById(Long id) {
+    public RoomResponse getRoomById(Long id) {
         return roomMapper.toDto(roomRepository.findById(id));
     }
 
-    public List<RoomDto> getRoomsByHotelId(Long hotelId) {
+    public List<RoomResponse> getRoomsByHotelId(Long hotelId) {
         return roomRepository.findByHotel_HotelId(hotelId).stream().map(roomMapper::toDto).collect(Collectors.toList());
     }
 
-    public List<RoomDto> getAllRooms() {
+    public List<RoomResponse> getAllRooms() {
         return roomRepository.findAll().stream().map(roomMapper::toDto).collect(Collectors.toList());
     }
 
-    public RoomDto updateRoomStatus(Long roomId, StatusDto statusDto) {
+    public RoomResponse updateRoomStatus(Long roomId, StatusDto statusDto) {
         Room room = roomRepository.findById(roomId);
         room.setStatus(statusMapper.toEntity(statusDto));
         return roomMapper.toDto(roomRepository.save(room));
     }
 
-    public RoomDto updateRoom(Long id, RoomDto roomDetails) {
+    public RoomResponse updateRoom(Long id, RoomRequest roomDetails) {
         Room roomUpdated = roomRepository.findById(id);
 
         Room roomToUpdate = roomMapper.toEntity(roomDetails);
@@ -57,7 +58,7 @@ public class RoomService {
         return roomMapper.toDto(roomRepository.save(roomUpdated));
     }
 
-    public RoomDto enableRoom(Long id, StatusDto enabled) {
+    public RoomResponse enableRoom(Long id, StatusDto enabled) {
         Room room = roomRepository.findById(id);
         room.setStatus(statusMapper.toEntity(enabled));
         return roomMapper.toDto(roomRepository.save(room));

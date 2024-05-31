@@ -2,8 +2,8 @@ package com.management.hotels.infrastructure.adapters.repositories.implementatio
 
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.exceptions.UserNotFoundException;
-import com.management.hotels.infrastructure.adapters.repositories.jpas.UserJpa;
 import com.management.hotels.domain.ports.repositories.UserRepository;
+import com.management.hotels.infrastructure.adapters.repositories.jpas.UserJpa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
