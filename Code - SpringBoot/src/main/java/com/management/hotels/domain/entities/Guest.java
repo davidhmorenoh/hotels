@@ -15,32 +15,35 @@ public class Guest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long guestId;
+    @Column(name = "guest_id", nullable = false)
+    private long guestId;
 
-    @ManyToOne
-    @JoinColumn(name = "reservationId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
-    @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
 
-    @Column(nullable = false)
+    @Column(name = "document_type", nullable = false)
     private String documentType;
 
-    @Column(nullable = false)
+    @Column(name = "document_number", nullable = false)
     private String documentNumber;
 
     private String email;
+
+    @Column(name = "contact_phone")
     private String contactPhone;
 
 }

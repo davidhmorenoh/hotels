@@ -7,21 +7,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "emergencycontacts")
+@Table(name = "emergency_contacts")
 public class EmergencyContact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contactId;
+    @Column(name = "contact_id", nullable = false)
+    private long contactId;
 
-    @ManyToOne
-    @JoinColumn(name = "reservationId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column(name = "contact_phone", nullable = false)
     private String contactPhone;
 
 }

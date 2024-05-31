@@ -15,9 +15,10 @@ public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hotelId;
+    @Column(name = "hotel_id", nullable = false)
+    private long hotelId;
 
-    @Column(nullable = false)
+    @Column(name = "hotel_name", nullable = false)
     private String hotelName;
 
     @Column(nullable = false)
@@ -30,11 +31,11 @@ public class Hotel {
     @Column(nullable = false)
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
 }

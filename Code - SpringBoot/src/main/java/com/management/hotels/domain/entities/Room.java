@@ -15,19 +15,20 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roomId;
+    @Column(name = "room_id", nullable = false)
+    private long roomId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
-    @Column(nullable = false)
+    @Column(name = "room_type", nullable = false)
     private String roomType;
 
     @Column(nullable = false)
     private String location;
 
-    @Column(nullable = false)
+    @Column(name = "base_cost", nullable = false)
     private double baseCost;
 
     @Column(nullable = false)
@@ -40,7 +41,7 @@ public class Room {
     @Column(nullable = false)
     private Status status;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
 }

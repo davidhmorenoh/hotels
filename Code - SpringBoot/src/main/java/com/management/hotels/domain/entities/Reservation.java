@@ -17,36 +17,37 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservationId;
+    @Column(name = "reservation_id", nullable = false)
+    private long reservationId;
 
-    @ManyToOne
-    @JoinColumn(name = "roomId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @ManyToOne
-    @JoinColumn(name = "travelerId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "traveler_id", nullable = false)
     private User traveler;
 
-    @Column(nullable = false)
+    @Column(name = "check_in_date", nullable = false)
     private Date checkInDate;
 
-    @Column(nullable = false)
+    @Column(name = "check_out_date", nullable = false)
     private Date checkOutDate;
 
-    @Column(nullable = false)
-    private Integer numberOfGuests;
+    @Column(name = "number_of_guests", nullable = false)
+    private int numberOfGuests;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "reservation_date", nullable = false, updatable = false)
     private Timestamp reservationDate = new Timestamp(System.currentTimeMillis());
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Guest> guests;
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EmergencyContact> emergencyContacts;
 
 }
