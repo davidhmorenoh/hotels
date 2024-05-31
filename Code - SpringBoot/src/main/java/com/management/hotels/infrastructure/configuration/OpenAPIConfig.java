@@ -2,7 +2,7 @@ package com.management.hotels.infrastructure.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +14,7 @@ public class OpenAPIConfig {
         return new OpenAPI()
                 .info(new Info().title("Hotels Management API")
                         .version("1.0")
-                        .description("API for managing hotels, rooms, and reservations"));
+                        .description("API documentation for the Hotel Management application"));
     }
 
     @Bean
