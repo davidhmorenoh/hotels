@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.management.hotels.application.dtos.enums.StateDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReservationResponse implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
@@ -27,8 +29,7 @@ public class ReservationResponse implements Serializable {
     @JsonProperty("date")
     private Timestamp reservationDate;
 
-    @JsonProperty("state")
-    private StateDto stateDto;
+    private StateDto state;
 
     private RoomResponse room;
 

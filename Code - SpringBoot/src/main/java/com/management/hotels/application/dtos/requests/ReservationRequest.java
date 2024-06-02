@@ -1,6 +1,5 @@
 package com.management.hotels.application.dtos.requests;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.management.hotels.application.dtos.enums.StateDto;
 import com.management.hotels.application.validation.ValidEnum;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -30,8 +29,7 @@ public class ReservationRequest implements Serializable {
     private Date checkOutDate;
 
     @ValidEnum(enumClass = StateDto.class, message = "Reservation state must be one of the predefined values: Confirmed or Cancelled")
-    @JsonProperty("state")
-    private StateDto stateDto;
+    private StateDto state;
 
     @NotNull(message = "Reservation roomId is mandatory")
     private long roomId;

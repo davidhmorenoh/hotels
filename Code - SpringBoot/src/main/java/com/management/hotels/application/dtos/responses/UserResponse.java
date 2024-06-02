@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.management.hotels.application.dtos.enums.UserTypeDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
+@Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
@@ -23,6 +27,6 @@ public class UserResponse implements Serializable {
     private String password;
 
     @JsonProperty("type")
-    private UserTypeDto userTypeDto;
+    private UserTypeDto userType;
 
 }

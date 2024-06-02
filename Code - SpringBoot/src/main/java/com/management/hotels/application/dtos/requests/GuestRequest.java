@@ -1,6 +1,5 @@
 package com.management.hotels.application.dtos.requests;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.management.hotels.application.dtos.enums.GenderDto;
 import com.management.hotels.application.validation.ValidEnum;
 import jakarta.validation.constraints.*;
@@ -34,8 +33,7 @@ public class GuestRequest implements Serializable {
 
     @NotNull(message = "Guest gender is mandatory")
     @ValidEnum(enumClass = GenderDto.class, message = "Guest gender must be one of the predefined values: Male, Female or Other")
-    @JsonProperty("gender")
-    private GenderDto genderDto;
+    private GenderDto gender;
 
     @NotBlank(message = "Guest document type is mandatory")
     @Size(max = 50, message = "Guest document type must not exceed 50 characters")

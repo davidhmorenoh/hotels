@@ -38,6 +38,6 @@ public class UserRequest implements Serializable {
     @NotNull(message = "User type is mandatory")
     @ValidEnum(enumClass = UserTypeDto.class, message = "User type must be one of the predefined values: Agent or Traveler")
     @JsonProperty("type")
-    private UserTypeDto userTypeDto;
+    private UserTypeDto userType;
 
 }

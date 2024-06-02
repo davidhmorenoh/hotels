@@ -43,8 +43,7 @@ public class RoomRequest implements Serializable {
     private int capacity;
 
     @ValidEnum(enumClass = StatusDto.class, message = "Room status must be one of the predefined values: Enabled or Disabled")
-    @JsonProperty("status")
-    private StatusDto statusDto;
+    private StatusDto status;
 
     @NotNull(message = "Room hotelId is mandatory")
     private long hotelId;
