@@ -1,7 +1,8 @@
 package com.management.hotels.application.usecases.users;
 
-import com.management.hotels.application.dtos.responses.UserResponse;
-import com.management.hotels.application.services.UserService;
+import com.management.hotels.application.dtos.requests.AuthenticationRequest;
+import com.management.hotels.application.dtos.responses.AuthenticationResponse;
+import com.management.hotels.application.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginUserUseCase {
 
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
-    public UserResponse execute(String username, String password) {
-        return userService.loginUser(username, password);
+    public AuthenticationResponse execute(AuthenticationRequest authenticationRequest) {
+        return authenticationService.loginUser(authenticationRequest);
     }
 
 }

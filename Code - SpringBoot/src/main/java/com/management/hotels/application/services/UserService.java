@@ -3,7 +3,7 @@ package com.management.hotels.application.services;
 import com.management.hotels.application.dtos.requests.UserRequest;
 import com.management.hotels.application.dtos.responses.UserResponse;
 import com.management.hotels.domain.entities.User;
-import com.management.hotels.domain.exceptions.InvalidPasswordException;
+import com.management.hotels.domain.exceptions.UserAlreadyRegisteredException;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,15 @@ public class UserService {
 
     public UserResponse registerUser(UserRequest userRequest) {
         User user = userMapper.toEntity(userRequest);
+
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserAlreadyRegisteredException("The user name is already in use.");
+        }
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new UserAlreadyRegisteredException("Email is already in use.");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.toDto(userRepository.save(user));
     }
@@ -37,14 +46,6 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    public UserResponse loginUser(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return userMapper.toDto(user);
-        }
-        throw new InvalidPasswordException("Invalid password");
     }
 
 }

@@ -3,7 +3,6 @@ package com.management.hotels.infrastructure.adapters.web;
 import com.management.hotels.application.dtos.requests.UserRequest;
 import com.management.hotels.application.dtos.responses.UserResponse;
 import com.management.hotels.application.usecases.users.GetAllUsersUseCase;
-import com.management.hotels.application.usecases.users.LoginUserUseCase;
 import com.management.hotels.application.usecases.users.RegisterUserUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ public class UserController {
 
     private final RegisterUserUseCase registerUserUseCase;
     private final GetAllUsersUseCase getAllUsersUseCase;
-    private final LoginUserUseCase loginUserUseCase;
 
     @GetMapping("/")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
@@ -29,11 +27,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@Valid @RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(registerUserUseCase.execute(userRequest));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<UserResponse> loginUser(@RequestParam String username, @RequestParam String password) {
-        return ResponseEntity.ok(loginUserUseCase.execute(username, password));
     }
 
 }
