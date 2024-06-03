@@ -13,6 +13,6 @@ public class AuthenticationResponse implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
-    private String jwt;
+    private String token;
 
 }
