@@ -29,6 +29,20 @@ public class HotelService {
 
     private final GenericMapper<HotelRequest, HotelResponse, Hotel> hotelMapper;
 
+    public List<HotelResponse> getAllHotels() {
+        return hotelRepository.findAll().stream().map(hotelMapper::toDto).collect(Collectors.toList());
+    }
+
+    public HotelResponse getHotelById(Long id, Long userId) {
+        Hotel hotel = this.validateAgentHotels(userId, id);
+        return hotelMapper.toDto(hotel);
+    }
+
+    public List<HotelResponse> getHotelsByUserId(Long userId) {
+        User user = this.validateUserTypeAgent(userId);
+        return hotelRepository.findByCreatedBy(user).stream().map(hotelMapper::toDto).collect(Collectors.toList());
+    }
+
     public HotelResponse createHotel(HotelRequest hotelRequest) {
         if (Objects.isNull(hotelRequest.getStatus())) {
             hotelRequest.setStatus(StatusDto.Enabled);
@@ -58,20 +72,6 @@ public class HotelService {
         return hotelMapper.toDto(hotelRepository.save(hotelUpdated));
     }
 
-    public List<HotelResponse> getAllHotels() {
-        return hotelRepository.findAll().stream().map(hotelMapper::toDto).collect(Collectors.toList());
-    }
-
-    public HotelResponse getHotelById(Long id, Long userId) {
-        Hotel hotel = this.validateAgentHotels(userId, id);
-        return hotelMapper.toDto(hotel);
-    }
-
-    public List<HotelResponse> getHotelsByUserId(Long userId) {
-        User user = this.validateUserTypeAgent(userId);
-        return hotelRepository.findByCreatedBy(user).stream().map(hotelMapper::toDto).collect(Collectors.toList());
-    }
-
     public HotelResponse enableHotel(Long id, Long userId) {
         Hotel hotel = this.validateAgentHotels(userId, id);
         if (hotel.getStatus().equals(Status.Enabled)) {
@@ -95,7 +95,7 @@ public class HotelService {
         hotelRepository.delete(hotel);
     }
 
-    private User validateUserTypeAgent(Long userId) {
+    public User validateUserTypeAgent(Long userId) {
         User user = userRepository.findById(userId);
         if (!user.getUserType().equals(UserType.Agent)) {
             throw new UserNotAuthorizedToPerformOperationException("An agent can be perform this operation only");
@@ -103,7 +103,7 @@ public class HotelService {
         return user;
     }
 
-    private Hotel validateAgentHotels(Long userId, Long hotelId) {
+    public Hotel validateAgentHotels(Long userId, Long hotelId) {
         User user = this.validateUserTypeAgent(userId);
         Hotel hotel = hotelRepository.findById(hotelId);
         if (!hotel.getCreatedBy().equals(user)) {

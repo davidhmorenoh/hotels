@@ -12,8 +12,8 @@ public class CreateRoomUseCase {
 
     private final RoomService roomService;
 
-    public RoomResponse execute(RoomRequest roomRequest) {
-        return roomService.createRoom(roomRequest);
+    public RoomResponse execute(RoomRequest roomRequest, Long userId) {
+        return roomService.createRoom(roomRequest, userId);
     }
 
 }

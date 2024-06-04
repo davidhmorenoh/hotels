@@ -12,8 +12,8 @@ public class UpdateRoomUseCase {
 
     private final RoomService roomService;
 
-    public RoomResponse execute(Long roomId, RoomRequest roomDetails) {
-        return roomService.updateRoom(roomId, roomDetails);
+    public RoomResponse execute(Long id, RoomRequest roomRequest, Long userId) {
+        return roomService.updateRoom(id, roomRequest, userId);
     }
 
 }

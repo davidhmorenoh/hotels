@@ -10,8 +10,8 @@ public class DeleteRoomUseCase {
 
     private final RoomService roomService;
 
-    public void execute(Long id) {
-        roomService.deleteRoom(id);
+    public void execute(Long id, Long userId) {
+        roomService.deleteRoom(id, userId);
     }
 
 }

@@ -11,8 +11,8 @@ public class GetRoomByIdUseCase {
 
     private final RoomService roomService;
 
-    public RoomResponse execute(Long id) {
-        return roomService.getRoomById(id);
+    public RoomResponse execute(Long id, Long userId) {
+        return roomService.getRoomById(id, userId);
     }
 
 }

@@ -13,8 +13,8 @@ public class GetRoomsByHotelIdUseCase {
 
     private final RoomService roomService;
 
-    public List<RoomResponse> execute(Long hotelId) {
-        return roomService.getRoomsByHotelId(hotelId);
+    public List<RoomResponse> execute(Long hotelId, Long userId) {
+        return roomService.getRoomsByHotelId(hotelId, userId);
     }
 
 }
