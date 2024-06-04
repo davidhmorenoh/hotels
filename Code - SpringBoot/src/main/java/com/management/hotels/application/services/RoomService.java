@@ -7,11 +7,11 @@ import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.entities.enums.Status;
-import com.management.hotels.domain.exceptions.hotels.HotelAlreadyEnabledException;
+import com.management.hotels.domain.exceptions.rooms.RoomAlreadyDisabledException;
+import com.management.hotels.domain.exceptions.rooms.RoomAlreadyEnabledException;
 import com.management.hotels.domain.exceptions.users.UserNotAuthorizedToPerformOperationException;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.RoomRepository;
-import com.management.hotels.domain.ports.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +24,10 @@ import java.util.stream.Collectors;
 public class RoomService {
 
     private final RoomRepository roomRepository;
-    private final UserRepository userRepository;
 
     private final HotelService hotelService;
 
     private final GenericMapper<RoomRequest, RoomResponse, Room> roomMapper;
-    private final GenericMapper<StatusDto, StatusDto, Status> statusMapper;
 
     public List<RoomResponse> getAllRooms() {
         return roomRepository.findAll().stream().map(roomMapper::toDto).collect(Collectors.toList());
@@ -78,7 +76,7 @@ public class RoomService {
     public RoomResponse enableRoom(Long id, Long userId) {
         Room room = this.validateAgentRooms(userId, id);
         if (room.getStatus().equals(Status.Enabled)) {
-            throw new HotelAlreadyEnabledException("No updated, because room already is enable");
+            throw new RoomAlreadyEnabledException("No updated, because room already is enable");
         }
         room.setStatus(Status.Enabled);
         return roomMapper.toDto(roomRepository.save(room));
@@ -87,7 +85,7 @@ public class RoomService {
     public RoomResponse disableRoom(Long id, Long userId) {
         Room room = this.validateAgentRooms(userId, id);
         if (room.getStatus().equals(Status.Disabled)) {
-            throw new HotelAlreadyEnabledException("No updated, because room already is disable");
+            throw new RoomAlreadyDisabledException("No updated, because room already is disable");
         }
         room.setStatus(Status.Disabled);
         return roomMapper.toDto(roomRepository.save(room));
