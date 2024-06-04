@@ -1,4 +1,4 @@
-package com.management.hotels.domain.exceptions;
+package com.management.hotels.domain.exceptions.authentication;
 
 public class InvalidPasswordException extends IllegalArgumentException {
 

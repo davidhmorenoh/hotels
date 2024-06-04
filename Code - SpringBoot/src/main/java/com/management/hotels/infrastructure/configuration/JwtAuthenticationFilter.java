@@ -19,12 +19,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenConfig jwtTokenConfig;
-    private final CustomUserDetailsService customUserDetailsService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenConfig jwtTokenConfig, CustomUserDetailsService customUserDetailsService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenConfig jwtTokenConfig) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenConfig = jwtTokenConfig;
-        this.customUserDetailsService = customUserDetailsService;
         setFilterProcessesUrl("/api/auth/login");
     }
 

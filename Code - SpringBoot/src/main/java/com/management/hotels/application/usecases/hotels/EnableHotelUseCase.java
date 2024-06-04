@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GetHotelByIdUseCase {
+public class EnableHotelUseCase {
 
     private final HotelService hotelService;
 
     public HotelResponse execute(Long id, Long userId) {
-        return hotelService.getHotelById(id, userId);
+        return hotelService.enableHotel(id, userId);
     }
 
 }

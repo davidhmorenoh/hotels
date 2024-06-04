@@ -38,7 +38,7 @@ public class Reservation {
     private int numberOfGuests;
 
     @Column(name = "reservation_date", nullable = false, updatable = false)
-    private Timestamp reservationDate = new Timestamp(System.currentTimeMillis());
+    private Timestamp reservationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

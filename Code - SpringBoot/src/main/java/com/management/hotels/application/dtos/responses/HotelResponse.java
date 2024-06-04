@@ -5,9 +5,11 @@ import com.management.hotels.application.dtos.enums.StatusDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
-                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtTokenConfig, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager, jwtTokenConfig), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(new JwtAuthorizationFilter(jwtTokenConfig, customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .logout(LogoutConfigurer::permitAll)
                 .httpBasic(Customizer.withDefaults());

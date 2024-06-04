@@ -10,8 +10,8 @@ public class DeleteHotelUseCase {
 
     private final HotelService hotelService;
 
-    public void execute(Long id) {
-        hotelService.deleteHotel(id);
+    public void execute(Long id, Long userId) {
+        hotelService.deleteHotel(id, userId);
     }
 
 }

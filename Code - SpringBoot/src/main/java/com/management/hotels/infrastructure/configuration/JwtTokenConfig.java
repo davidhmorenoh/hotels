@@ -1,7 +1,7 @@
 package com.management.hotels.infrastructure.configuration;
 
 import com.management.hotels.application.services.RevokedTokenService;
-import com.management.hotels.domain.exceptions.InvalidSessionException;
+import com.management.hotels.domain.exceptions.authentication.InvalidSessionException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,6 +1,5 @@
 package com.management.hotels.infrastructure.adapters.web;
 
-import com.management.hotels.application.dtos.enums.StatusDto;
 import com.management.hotels.application.dtos.requests.HotelRequest;
 import com.management.hotels.application.dtos.responses.HotelResponse;
 import com.management.hotels.application.usecases.hotels.*;
@@ -21,7 +20,8 @@ public class HotelController {
     private final GetAllHotelsUseCase getAllHotelsUseCase;
     private final GetHotelByIdUseCase getHotelByIdUseCase;
     private final GetHotelsByUserIdUseCase getHotelsByUserIdUseCase;
-    private final UpdateHotelStatusUseCase updateHotelStatusUseCase;
+    private final EnableHotelUseCase enableHotelUseCase;
+    private final DisableHotelUseCase disableHotelUseCase;
     private final DeleteHotelUseCase deleteHotelUseCase;
 
     @GetMapping("/")
@@ -31,8 +31,8 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HotelResponse> getHotelById(@PathVariable Long id) {
-        return ResponseEntity.ok(getHotelByIdUseCase.execute(id));
+    public ResponseEntity<HotelResponse> getHotelById(@PathVariable Long id, @RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(getHotelByIdUseCase.execute(id, userId));
     }
 
     @GetMapping("/user/{userId}")
@@ -52,13 +52,18 @@ public class HotelController {
     }
 
     @PatchMapping("/{id}/enable")
-    public ResponseEntity<HotelResponse> enableHotel(@PathVariable Long id, @RequestParam StatusDto statusDto) {
-        return ResponseEntity.ok(updateHotelStatusUseCase.execute(id, statusDto));
+    public ResponseEntity<HotelResponse> enableHotel(@PathVariable Long id, @RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(enableHotelUseCase.execute(id, userId));
+    }
+
+    @PatchMapping("/{id}/disable")
+    public ResponseEntity<HotelResponse> disableHotel(@PathVariable Long id, @RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(disableHotelUseCase.execute(id, userId));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
-        deleteHotelUseCase.execute(id);
+    public ResponseEntity<Void> deleteHotel(@PathVariable Long id, @RequestParam("userId") Long userId) {
+        deleteHotelUseCase.execute(id, userId);
         return ResponseEntity.noContent().build();
     }
 

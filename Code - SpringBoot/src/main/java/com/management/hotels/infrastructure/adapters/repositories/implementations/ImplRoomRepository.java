@@ -3,7 +3,7 @@ package com.management.hotels.infrastructure.adapters.repositories.implementatio
 import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.enums.Status;
-import com.management.hotels.domain.exceptions.RoomNotFoundException;
+import com.management.hotels.domain.exceptions.rooms.RoomNotFoundException;
 import com.management.hotels.domain.ports.repositories.RoomRepository;
 import com.management.hotels.infrastructure.adapters.repositories.jpas.RoomJpa;
 import lombok.RequiredArgsConstructor;

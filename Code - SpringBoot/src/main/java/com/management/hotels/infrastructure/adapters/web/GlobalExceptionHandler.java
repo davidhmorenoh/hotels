@@ -1,6 +1,15 @@
 package com.management.hotels.infrastructure.adapters.web;
 
-import com.management.hotels.domain.exceptions.*;
+import com.management.hotels.domain.exceptions.authentication.InvalidPasswordException;
+import com.management.hotels.domain.exceptions.authentication.InvalidSessionException;
+import com.management.hotels.domain.exceptions.hotels.HotelAlreadyDisabledException;
+import com.management.hotels.domain.exceptions.hotels.HotelAlreadyEnabledException;
+import com.management.hotels.domain.exceptions.hotels.HotelNotFoundException;
+import com.management.hotels.domain.exceptions.reservations.ReservationNotFoundException;
+import com.management.hotels.domain.exceptions.rooms.RoomNotFoundException;
+import com.management.hotels.domain.exceptions.users.UserAlreadyRegisteredException;
+import com.management.hotels.domain.exceptions.users.UserNotAuthorizedToPerformOperationException;
+import com.management.hotels.domain.exceptions.users.UserNotFoundException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,33 +21,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InvalidPasswordException.class)
+    @ExceptionHandler({InvalidPasswordException.class, SignatureException.class, InvalidSessionException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleInvalidPasswordException(InvalidPasswordException ex) {
+    public ResponseEntity<String> handleUnauthorizedException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({UserNotFoundException.class, RoomNotFoundException.class, ReservationNotFoundException.class, HotelNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(RoomNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleRoomNotFoundException(RoomNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ReservationNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleReservationNotFoundException(ReservationNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(HotelNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleHotelNotFoundException(HotelNotFoundException ex) {
+    public ResponseEntity<String> handleNotFoundException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
@@ -54,16 +45,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(SignatureException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleSignatureException(SignatureException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(InvalidSessionException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleInvalidSessionException(InvalidSessionException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler({UserNotAuthorizedToPerformOperationException.class, HotelAlreadyEnabledException.class, HotelAlreadyDisabledException.class})
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public ResponseEntity<String> handlePreconditionFailedException(Exception ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.PRECONDITION_FAILED);
     }
 
 }

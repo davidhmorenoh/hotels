@@ -3,7 +3,7 @@ package com.management.hotels.application.services;
 import com.management.hotels.application.dtos.requests.UserRequest;
 import com.management.hotels.application.dtos.responses.UserResponse;
 import com.management.hotels.domain.entities.User;
-import com.management.hotels.domain.exceptions.UserAlreadyRegisteredException;
+import com.management.hotels.domain.exceptions.users.UserAlreadyRegisteredException;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

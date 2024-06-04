@@ -67,7 +67,7 @@ CREATE TABLE `hotels` (
   `hotel_name` varchar(100) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(100) NOT NULL,
-  `status` enum('Enabled','Disabled') DEFAULT 'Enabled',
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled',
   `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -85,7 +85,7 @@ CREATE TABLE `reservations` (
   `check_out_date` date NOT NULL,
   `number_of_guests` int(11) NOT NULL,
   `reservation_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `state` enum('Confirmed','Cancelled') DEFAULT 'Confirmed'
+  `state` enum('Confirmed','Cancelled') NOT NULL DEFAULT 'Confirmed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -102,7 +102,7 @@ CREATE TABLE `rooms` (
   `base_cost` decimal(10,2) NOT NULL,
   `taxes` decimal(10,2) NOT NULL,
   `capacity` int(11) NOT NULL,
-  `status` enum('Enabled','Disabled') DEFAULT 'Enabled'
+  `status` enum('Enabled','Disabled') NOT NULL DEFAULT 'Enabled'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
