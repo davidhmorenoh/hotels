@@ -13,6 +13,7 @@ import com.management.hotels.domain.exceptions.rooms.RoomNotFoundException;
 import com.management.hotels.domain.exceptions.users.UserAlreadyRegisteredException;
 import com.management.hotels.domain.exceptions.users.UserNotAuthorizedToPerformOperationException;
 import com.management.hotels.domain.exceptions.users.UserNotFoundException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             InvalidPasswordException.class,
             SignatureException.class,
-            InvalidSessionException.class})
+            InvalidSessionException.class,
+            ExpiredJwtException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<String> handleUnauthorizedException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);

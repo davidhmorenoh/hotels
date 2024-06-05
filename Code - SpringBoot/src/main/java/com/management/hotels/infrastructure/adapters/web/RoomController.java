@@ -1,5 +1,6 @@
 package com.management.hotels.infrastructure.adapters.web;
 
+import com.management.hotels.application.dtos.requests.AvailableRoomsRequest;
 import com.management.hotels.application.dtos.requests.RoomRequest;
 import com.management.hotels.application.dtos.responses.RoomResponse;
 import com.management.hotels.application.usecases.rooms.*;
@@ -15,13 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoomController {
 
-    private final CreateRoomUseCase createRoomUseCase;
+    private final GetAllRoomsUseCase getAllRoomsUseCase;
     private final GetRoomByIdUseCase getRoomByIdUseCase;
     private final GetRoomsByHotelIdUseCase getRoomsByHotelIdUseCase;
-    private final GetAllRoomsUseCase getAllRoomsUseCase;
+    private final GetAvailableRoomsUseCase getAvailableRoomsUseCase;
+    private final CreateRoomUseCase createRoomUseCase;
+    private final UpdateRoomUseCase updateRoomUseCase;
     private final DisableRoomUseCase disableRoomUseCase;
     private final EnableRoomUseCase enableRoomUseCase;
-    private final UpdateRoomUseCase updateRoomUseCase;
     private final DeleteRoomUseCase deleteRoomUseCase;
 
     @GetMapping("/")
@@ -37,6 +39,11 @@ public class RoomController {
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<List<RoomResponse>> getRoomsByHotelId(@PathVariable Long hotelId, @RequestParam("userId") Long userId) {
         return ResponseEntity.ok(getRoomsByHotelIdUseCase.execute(hotelId, userId));
+    }
+
+    @PostMapping("/available")
+    public ResponseEntity<List<RoomResponse>> getAvailableRooms(@Valid @RequestBody AvailableRoomsRequest availableRoomsRequest, @RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(getAvailableRoomsUseCase.execute(availableRoomsRequest, userId));
     }
 
     @PostMapping("/create")

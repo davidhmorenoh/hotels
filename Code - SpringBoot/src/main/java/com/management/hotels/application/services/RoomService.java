@@ -1,17 +1,20 @@
 package com.management.hotels.application.services;
 
 import com.management.hotels.application.dtos.enums.StatusDto;
+import com.management.hotels.application.dtos.requests.AvailableRoomsRequest;
 import com.management.hotels.application.dtos.requests.RoomRequest;
 import com.management.hotels.application.dtos.responses.RoomResponse;
 import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.User;
 import com.management.hotels.domain.entities.enums.Status;
+import com.management.hotels.domain.entities.enums.UserType;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyDisabledException;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyEnabledException;
 import com.management.hotels.domain.exceptions.users.UserNotAuthorizedToPerformOperationException;
 import com.management.hotels.domain.ports.mappers.GenericMapper;
 import com.management.hotels.domain.ports.repositories.RoomRepository;
+import com.management.hotels.domain.ports.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
 
     private final HotelService hotelService;
 
@@ -41,6 +45,17 @@ public class RoomService {
     public List<RoomResponse> getRoomsByHotelId(Long hotelId, Long userId) {
         Hotel hotel = hotelService.validateAgentHotels(userId, hotelId);
         return roomRepository.findByHotel(hotel).stream().map(roomMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<RoomResponse> findAvailableRooms(AvailableRoomsRequest availableRoomsRequest, Long userId) {
+        this.validateUserTypeTraveler(userId);
+        return roomRepository
+                .findAvailableRooms(
+                        availableRoomsRequest.getCity(),
+                        availableRoomsRequest.getCheckInDate(),
+                        availableRoomsRequest.getCheckOutDate(),
+                        availableRoomsRequest.getCapacity())
+                .stream().map(roomMapper::toDto).collect(Collectors.toList());
     }
 
     public RoomResponse createRoom(RoomRequest roomRequest, Long userId) {
@@ -103,6 +118,13 @@ public class RoomService {
             throw new UserNotAuthorizedToPerformOperationException("This agent can't see, modified or deleted this room");
         }
         return room;
+    }
+
+    private void validateUserTypeTraveler(Long userId) {
+        User user = userRepository.findById(userId);
+        if (!user.getUserType().equals(UserType.Traveler)) {
+            throw new UserNotAuthorizedToPerformOperationException("An traveler can be perform this operation only");
+        }
     }
 
 }
