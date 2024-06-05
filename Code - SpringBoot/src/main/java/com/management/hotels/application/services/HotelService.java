@@ -40,7 +40,7 @@ public class HotelService {
 
     public List<HotelResponse> getHotelsByUserId(Long userId) {
         User user = this.validateUserTypeAgent(userId);
-        return hotelRepository.findByCreatedBy(user).stream().map(hotelMapper::toDto).collect(Collectors.toList());
+        return hotelRepository.findByUser(user).stream().map(hotelMapper::toDto).collect(Collectors.toList());
     }
 
     public HotelResponse createHotel(HotelRequest hotelRequest) {
@@ -50,24 +50,24 @@ public class HotelService {
 
         Hotel hotel = hotelMapper.toEntity(hotelRequest);
 
-        User createdBy = this.validateUserTypeAgent(hotelRequest.getCreatedBy());
-        hotel.setCreatedBy(createdBy);
+        User createdBy = this.validateUserTypeAgent(hotelRequest.getUserId());
+        hotel.setUser(createdBy);
 
         return hotelMapper.toDto(hotelRepository.save(hotel));
     }
 
     public HotelResponse updateHotel(Long id, HotelRequest hotelRequest) {
-        Hotel hotelUpdated = this.validateAgentHotels(hotelRequest.getCreatedBy(), id);
+        Hotel hotelUpdated = this.validateAgentHotels(hotelRequest.getUserId(), id);
 
         Hotel hotelToUpdate = hotelMapper.toEntity(hotelRequest);
 
-        User user = userRepository.findById(hotelRequest.getCreatedBy());
+        User user = userRepository.findById(hotelRequest.getUserId());
 
         hotelUpdated.setHotelName(hotelToUpdate.getHotelName());
         hotelUpdated.setCity(hotelToUpdate.getCity());
         hotelUpdated.setAddress(hotelToUpdate.getAddress());
         hotelUpdated.setStatus(hotelToUpdate.getStatus());
-        hotelUpdated.setCreatedBy(user);
+        hotelUpdated.setUser(user);
 
         return hotelMapper.toDto(hotelRepository.save(hotelUpdated));
     }
@@ -106,7 +106,7 @@ public class HotelService {
     public Hotel validateAgentHotels(Long userId, Long hotelId) {
         User user = this.validateUserTypeAgent(userId);
         Hotel hotel = hotelRepository.findById(hotelId);
-        if (!hotel.getCreatedBy().equals(user)) {
+        if (!hotel.getUser().equals(user)) {
             throw new UserNotAuthorizedToPerformOperationException("This agent can't see, modified or deleted this hotel");
         }
         return hotel;

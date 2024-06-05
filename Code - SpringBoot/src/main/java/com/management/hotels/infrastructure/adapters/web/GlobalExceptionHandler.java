@@ -5,6 +5,7 @@ import com.management.hotels.domain.exceptions.authentication.InvalidSessionExce
 import com.management.hotels.domain.exceptions.hotels.HotelAlreadyDisabledException;
 import com.management.hotels.domain.exceptions.hotels.HotelAlreadyEnabledException;
 import com.management.hotels.domain.exceptions.hotels.HotelNotFoundException;
+import com.management.hotels.domain.exceptions.reservations.BookingPreconditionsException;
 import com.management.hotels.domain.exceptions.reservations.ReservationNotFoundException;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyDisabledException;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyEnabledException;
@@ -23,13 +24,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({InvalidPasswordException.class, SignatureException.class, InvalidSessionException.class})
+    @ExceptionHandler({
+            InvalidPasswordException.class,
+            SignatureException.class,
+            InvalidSessionException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<String> handleUnauthorizedException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({UserNotFoundException.class, RoomNotFoundException.class, ReservationNotFoundException.class, HotelNotFoundException.class})
+    @ExceptionHandler({
+            UserNotFoundException.class,
+            RoomNotFoundException.class,
+            ReservationNotFoundException.class,
+            HotelNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleNotFoundException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -47,7 +55,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler({UserNotAuthorizedToPerformOperationException.class, HotelAlreadyEnabledException.class, HotelAlreadyDisabledException.class, RoomAlreadyEnabledException.class, RoomAlreadyDisabledException.class})
+    @ExceptionHandler({
+            UserNotAuthorizedToPerformOperationException.class,
+            HotelAlreadyEnabledException.class,
+            HotelAlreadyDisabledException.class,
+            RoomAlreadyEnabledException.class,
+            RoomAlreadyDisabledException.class,
+            BookingPreconditionsException.class})
     @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     public ResponseEntity<String> handlePreconditionFailedException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.PRECONDITION_FAILED);

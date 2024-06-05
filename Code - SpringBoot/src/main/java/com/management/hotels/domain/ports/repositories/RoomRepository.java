@@ -10,7 +10,7 @@ public interface RoomRepository {
 
     List<Room> findByHotelAndStatus(Hotel hotel, Status status);
 
-    List<Room> findByHotel_HotelId(Long hotelId);
+    List<Room> findByHotel(Hotel hotel);
 
     Room save(Room room);
 

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface HotelJpa extends JpaRepository<Hotel, Long> {
 
-    List<Hotel> findByCreatedBy(User user);
+    List<Hotel> findByUser(User user);
 
 }

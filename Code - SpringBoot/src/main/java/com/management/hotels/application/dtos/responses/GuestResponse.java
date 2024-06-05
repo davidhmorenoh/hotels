@@ -37,6 +37,4 @@ public class GuestResponse implements Serializable {
 
     private String contactPhone;
 
-    private ReservationResponse reservation;
-
 }

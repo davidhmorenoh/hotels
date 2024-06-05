@@ -50,7 +50,4 @@ public class GuestRequest implements Serializable {
     @Size(max = 20, message = "Guest contact phone must not exceed 20 characters")
     private String contactPhone;
 
-    @NotNull(message = "Guest reservationId is mandatory")
-    private long reservationId;
-
 }

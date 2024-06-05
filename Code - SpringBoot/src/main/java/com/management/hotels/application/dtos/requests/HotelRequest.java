@@ -38,6 +38,7 @@ public class HotelRequest implements Serializable {
     private StatusDto status;
 
     @NotNull(message = "Hotel createdBy is mandatory")
-    private long createdBy;
+    @JsonProperty("createdBy")
+    private long userId;
 
 }

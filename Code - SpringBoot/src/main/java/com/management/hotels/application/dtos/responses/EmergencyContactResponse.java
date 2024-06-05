@@ -24,6 +24,4 @@ public class EmergencyContactResponse implements Serializable {
     @JsonProperty("phone")
     private String contactPhone;
 
-    private ReservationResponse reservation;
-
 }

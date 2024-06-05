@@ -26,7 +26,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "traveler_id", nullable = false)
-    private User traveler;
+    private User user;
 
     @Column(name = "check_in_date", nullable = false)
     private Date checkInDate;

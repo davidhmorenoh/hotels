@@ -1,5 +1,6 @@
 package com.management.hotels.infrastructure.adapters.repositories.implementations;
 
+import com.management.hotels.domain.entities.Hotel;
 import com.management.hotels.domain.entities.Reservation;
 import com.management.hotels.domain.entities.Room;
 import com.management.hotels.domain.entities.User;
@@ -9,6 +10,7 @@ import com.management.hotels.infrastructure.adapters.repositories.jpas.Reservati
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -23,8 +25,13 @@ public class ImplReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> findByTraveler(User traveler) {
-        return reservationJpa.findByTraveler(traveler);
+    public List<Reservation> findByUser(User traveler) {
+        return reservationJpa.findByUser(traveler);
+    }
+
+    @Override
+    public List<Reservation> findConflictingReservations(long roomId, Date checkInDate, Date checkOutDate) {
+        return reservationJpa.findConflictingReservations(roomId, checkInDate, checkOutDate);
     }
 
     @Override
@@ -40,6 +47,10 @@ public class ImplReservationRepository implements ReservationRepository {
     @Override
     public Reservation findById(Long id) {
         return reservationJpa.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found with id: " + id));
+    }
+
+    public List<Reservation> findByHotel(Hotel hotel) {
+        return reservationJpa.findByHotel(hotel);
     }
 
     @Override

@@ -17,8 +17,8 @@ public class ImplHotelRepository implements HotelRepository {
     private final HotelJpa hotelJpa;
 
     @Override
-    public List<Hotel> findByCreatedBy(User user) {
-        return hotelJpa.findByCreatedBy(user);
+    public List<Hotel> findByUser(User user) {
+        return hotelJpa.findByUser(user);
     }
 
     @Override

@@ -34,10 +34,10 @@ public class User {
     @Column(name = "user_type", nullable = false)
     private UserType userType;
 
-    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hotel> hotels;
 
-    @OneToMany(mappedBy = "traveler", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
 }

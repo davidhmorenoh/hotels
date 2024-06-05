@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -35,6 +36,11 @@ public class ReservationResponse implements Serializable {
 
     private RoomResponse room;
 
-    private UserResponse traveler;
+    @JsonProperty("traveler")
+    private UserResponse user;
+
+    private List<EmergencyContactResponse> emergencyContacts;
+
+    private List<GuestResponse> guests;
 
 }

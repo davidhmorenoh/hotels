@@ -23,8 +23,8 @@ public class ImplRoomRepository implements RoomRepository {
     }
 
     @Override
-    public List<Room> findByHotel_HotelId(Long hotelId) {
-        return roomJpa.findByHotel_HotelId(hotelId);
+    public List<Room> findByHotel(Hotel hotel) {
+        return roomJpa.findByHotel(hotel);
     }
 
     @Override

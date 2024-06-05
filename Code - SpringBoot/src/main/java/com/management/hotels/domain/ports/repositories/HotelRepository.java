@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface HotelRepository {
 
-    List<Hotel> findByCreatedBy(User user);
+    List<Hotel> findByUser(User user);
 
     Hotel save(Hotel hotel);
 

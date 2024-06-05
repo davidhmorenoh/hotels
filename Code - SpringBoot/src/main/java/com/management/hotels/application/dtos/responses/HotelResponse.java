@@ -29,6 +29,7 @@ public class HotelResponse implements Serializable {
 
     private StatusDto status;
 
-    private UserResponse createdBy;
+    @JsonProperty("createdBy")
+    private UserResponse user;
 
 }

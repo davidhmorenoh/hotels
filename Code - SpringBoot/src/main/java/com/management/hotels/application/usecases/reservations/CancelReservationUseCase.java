@@ -5,16 +5,14 @@ import com.management.hotels.application.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class GetReservationsByRoomUseCase {
+public class CancelReservationUseCase {
 
     private final ReservationService reservationService;
 
-    public List<ReservationResponse> execute(Long roomId) {
-        return reservationService.getReservationsByRoom(roomId);
+    public ReservationResponse execute(Long id, Long userId) {
+        return reservationService.cancelReservation(id, userId);
     }
 
 }

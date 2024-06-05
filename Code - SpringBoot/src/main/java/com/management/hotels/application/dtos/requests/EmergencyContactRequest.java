@@ -2,7 +2,6 @@ package com.management.hotels.application.dtos.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +26,5 @@ public class EmergencyContactRequest implements Serializable {
     @Size(max = 20, message = "Emergency contact phone must not exceed 20 characters")
     @JsonProperty("phone")
     private String contactPhone;
-
-    @NotNull(message = "Emergency contact reservationId is mandatory")
-    private long reservationId;
 
 }

@@ -40,7 +40,7 @@ public class RoomService {
 
     public List<RoomResponse> getRoomsByHotelId(Long hotelId, Long userId) {
         Hotel hotel = hotelService.validateAgentHotels(userId, hotelId);
-        return roomRepository.findByHotel_HotelId(hotel.getHotelId()).stream().map(roomMapper::toDto).collect(Collectors.toList());
+        return roomRepository.findByHotel(hotel).stream().map(roomMapper::toDto).collect(Collectors.toList());
     }
 
     public RoomResponse createRoom(RoomRequest roomRequest, Long userId) {
@@ -96,10 +96,10 @@ public class RoomService {
         roomRepository.delete(room);
     }
 
-    private Room validateAgentRooms(Long userId, Long roomId) {
+    public Room validateAgentRooms(Long userId, Long roomId) {
         User user = hotelService.validateUserTypeAgent(userId);
         Room room = roomRepository.findById(roomId);
-        if (!room.getHotel().getCreatedBy().equals(user)) {
+        if (!room.getHotel().getUser().equals(user)) {
             throw new UserNotAuthorizedToPerformOperationException("This agent can't see, modified or deleted this room");
         }
         return room;

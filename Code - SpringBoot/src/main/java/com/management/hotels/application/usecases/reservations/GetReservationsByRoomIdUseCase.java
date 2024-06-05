@@ -1,19 +1,20 @@
 package com.management.hotels.application.usecases.reservations;
 
-import com.management.hotels.application.dtos.enums.StateDto;
 import com.management.hotels.application.dtos.responses.ReservationResponse;
 import com.management.hotels.application.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class UpdateReservationStatusUseCase {
+public class GetReservationsByRoomIdUseCase {
 
     private final ReservationService reservationService;
 
-    public ReservationResponse execute(Long reservationId, StateDto stateDto) {
-        return reservationService.updateReservationStatus(reservationId, stateDto);
+    public List<ReservationResponse> execute(Long roomId, Long userId) {
+        return reservationService.getReservationsByRoomId(roomId, userId);
     }
 
 }

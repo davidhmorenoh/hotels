@@ -13,8 +13,8 @@ public class GetReservationsByTravelerUseCase {
 
     private final ReservationService reservationService;
 
-    public List<ReservationResponse> execute(Long travelerId) {
-        return reservationService.getReservationsByTraveler(travelerId);
+    public List<ReservationResponse> execute(Long userId) {
+        return reservationService.getReservationsByTraveler(userId);
     }
 
 }
