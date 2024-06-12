@@ -18,6 +18,8 @@ public class EmergencyContactRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long contactId;
+
     @NotBlank(message = "Emergency contact full name is mandatory")
     @Size(max = 200, message = "Emergency contact full name must not exceed 200 characters")
     private String fullName;

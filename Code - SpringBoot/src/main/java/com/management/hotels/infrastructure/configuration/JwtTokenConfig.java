@@ -1,6 +1,7 @@
 package com.management.hotels.infrastructure.configuration;
 
-import com.management.hotels.application.services.RevokedTokenService;
+import com.management.hotels.application.ports.configuration.JwtTokenPortConfig;
+import com.management.hotels.application.ports.services.RevokedTokenApplicationPortService;
 import com.management.hotels.domain.exceptions.authentication.InvalidSessionException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,15 +19,16 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class JwtTokenConfig {
+public class JwtTokenConfig implements JwtTokenPortConfig {
 
     private final String SECRET = "M4n4G3m3Nt+H0t3Ls+T0k3n+T0p+S3cR3tM4n4G3m3Nt+H0t3Ls+T0k3n+T0p+S3cR3tM4n4G3m3Nt+H0t3Ls+T0k3n+T0p+S3cR3t";
 
     private final SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    private final RevokedTokenService revokedTokenService;
+    private final RevokedTokenApplicationPortService revokedTokenApplicationPortService;
 
-    protected String extractUsername(String token) {
+    @Override
+    public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -40,16 +42,18 @@ public class JwtTokenConfig {
     }
 
     private Claims extractAllClaims(String token) {
-        if (revokedTokenService.isTokenRevoked(token)) {
+        if (revokedTokenApplicationPortService.isTokenRevoked(token)) {
             throw new InvalidSessionException("Token has been revoked");
         }
         return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
     }
 
-    private boolean isTokenExpired(String token) {
+    @Override
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    @Override
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
@@ -65,7 +69,8 @@ public class JwtTokenConfig {
                 .compact();
     }
 
-    protected boolean validateToken(String token, UserDetails userDetails) {
+    @Override
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

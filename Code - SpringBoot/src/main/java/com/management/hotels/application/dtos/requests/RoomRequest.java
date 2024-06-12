@@ -22,6 +22,8 @@ public class RoomRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long roomId;
+
     @NotBlank(message = "Room type is mandatory")
     @Size(min = 3, max = 50, message = "Room type must be between 3 and 50 characters")
     @JsonProperty("type")

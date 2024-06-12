@@ -32,11 +32,6 @@ public class ImplUserRepository implements UserRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        userJpa.deleteById(id);
-    }
-
-    @Override
     public User findById(Long id) {
         return userJpa.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
     }

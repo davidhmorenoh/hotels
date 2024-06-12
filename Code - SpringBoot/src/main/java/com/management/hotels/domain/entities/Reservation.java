@@ -44,10 +44,10 @@ public class Reservation {
     @Column(nullable = false)
     private State state;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<Guest> guests;
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<EmergencyContact> emergencyContacts;
 
 }

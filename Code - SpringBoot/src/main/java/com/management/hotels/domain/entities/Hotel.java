@@ -35,7 +35,7 @@ public class Hotel {
     @JoinColumn(name = "created_by", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Room> rooms;
 
 }

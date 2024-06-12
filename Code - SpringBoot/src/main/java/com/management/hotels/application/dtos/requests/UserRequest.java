@@ -22,6 +22,8 @@ public class UserRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long userId;
+
     @NotBlank(message = "Username is mandatory")
     @Size(min = 5, max = 50, message = "Username must be between 5 and 50 characters")
     private String username;

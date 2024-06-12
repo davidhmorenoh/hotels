@@ -21,6 +21,8 @@ public class HotelRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long hotelId;
+
     @NotBlank(message = "Hotel name is mandatory")
     @Size(max = 100, message = "Hotel name must not exceed 100 characters")
     @JsonProperty("name")
