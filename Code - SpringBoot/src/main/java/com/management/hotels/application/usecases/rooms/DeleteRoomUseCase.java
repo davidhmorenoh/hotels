@@ -1,6 +1,6 @@
 package com.management.hotels.application.usecases.rooms;
 
-import com.management.hotels.application.services.RoomService;
+import com.management.hotels.application.services.RoomApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeleteRoomUseCase {
 
-    private final RoomService roomService;
+    private final RoomApplicationService roomApplicationService;
 
     public void execute(Long id, Long userId) {
-        roomService.deleteRoom(id, userId);
+        roomApplicationService.deleteRoom(id, userId);
     }
 
 }

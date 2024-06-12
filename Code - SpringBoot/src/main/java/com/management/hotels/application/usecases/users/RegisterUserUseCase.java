@@ -2,7 +2,7 @@ package com.management.hotels.application.usecases.users;
 
 import com.management.hotels.application.dtos.requests.UserRequest;
 import com.management.hotels.application.dtos.responses.UserResponse;
-import com.management.hotels.application.services.UserService;
+import com.management.hotels.application.services.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RegisterUserUseCase {
 
-    private final UserService userService;
+    private final UserApplicationService userApplicationService;
 
     public UserResponse execute(UserRequest userRequest) {
-        return userService.registerUser(userRequest);
+        return userApplicationService.registerUser(userRequest);
     }
 
 }

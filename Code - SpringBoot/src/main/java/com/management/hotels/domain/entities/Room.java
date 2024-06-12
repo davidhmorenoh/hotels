@@ -41,7 +41,7 @@ public class Room {
     @Column(nullable = false)
     private Status status;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
 }
