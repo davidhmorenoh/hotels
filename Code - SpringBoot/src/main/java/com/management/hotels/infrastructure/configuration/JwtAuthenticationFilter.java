@@ -3,6 +3,7 @@ package com.management.hotels.infrastructure.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.hotels.application.dtos.requests.AuthenticationRequest;
 import com.management.hotels.application.dtos.responses.AuthenticationResponse;
+import com.management.hotels.application.ports.configuration.JwtTokenPortConfig;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,11 +19,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenConfig jwtTokenConfig;
+    private final JwtTokenPortConfig jwtTokenPortConfig;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenConfig jwtTokenConfig) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenPortConfig jwtTokenPortConfig) {
         this.authenticationManager = authenticationManager;
-        this.jwtTokenConfig = jwtTokenConfig;
+        this.jwtTokenPortConfig = jwtTokenPortConfig;
         setFilterProcessesUrl("/api/auth/login");
     }
 
@@ -40,7 +41,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         UserDetails userDetails = (UserDetails) authResult.getPrincipal();
-        String jwt = jwtTokenConfig.generateToken(userDetails);
+        String jwt = jwtTokenPortConfig.generateToken(userDetails);
         AuthenticationResponse authResponse = new AuthenticationResponse(jwt);
 
         response.setContentType("application/json");

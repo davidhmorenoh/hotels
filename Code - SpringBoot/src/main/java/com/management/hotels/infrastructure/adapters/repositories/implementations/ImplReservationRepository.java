@@ -20,6 +20,16 @@ public class ImplReservationRepository implements ReservationRepository {
     private final ReservationJpa reservationJpa;
 
     @Override
+    public List<Reservation> findAll() {
+        return reservationJpa.findAll();
+    }
+
+    @Override
+    public Reservation findById(Long id) {
+        return reservationJpa.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found with id: " + id));
+    }
+
+    @Override
     public List<Reservation> findByRoom(Room room) {
         return reservationJpa.findByRoom(room);
     }
@@ -30,6 +40,11 @@ public class ImplReservationRepository implements ReservationRepository {
     }
 
     @Override
+    public List<Reservation> findByHotel(Hotel hotel) {
+        return reservationJpa.findByHotel(hotel);
+    }
+
+    @Override
     public List<Reservation> findConflictingReservations(long roomId, Date checkInDate, Date checkOutDate) {
         return reservationJpa.findConflictingReservations(roomId, checkInDate, checkOutDate);
     }
@@ -37,20 +52,6 @@ public class ImplReservationRepository implements ReservationRepository {
     @Override
     public Reservation save(Reservation reservation) {
         return reservationJpa.save(reservation);
-    }
-
-    @Override
-    public List<Reservation> findAll() {
-        return reservationJpa.findAll();
-    }
-
-    @Override
-    public Reservation findById(Long id) {
-        return reservationJpa.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found with id: " + id));
-    }
-
-    public List<Reservation> findByHotel(Hotel hotel) {
-        return reservationJpa.findByHotel(hotel);
     }
 
     @Override

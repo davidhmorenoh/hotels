@@ -10,19 +10,19 @@ import java.util.List;
 
 public interface ReservationRepository {
 
-    List<Reservation> findByRoom(Room room);
-
-    List<Reservation> findByUser(User traveler);
-
-    List<Reservation> findConflictingReservations(long roomId, Date checkInDate, Date checkOutDate);
-
     List<Reservation> findAll();
 
     Reservation findById(Long id);
 
-    Reservation save(Reservation reservation);
+    List<Reservation> findByRoom(Room room);
+
+    List<Reservation> findByUser(User traveler);
 
     List<Reservation> findByHotel(Hotel hotel);
+
+    List<Reservation> findConflictingReservations(long roomId, Date checkInDate, Date checkOutDate);
+
+    Reservation save(Reservation reservation);
 
     void delete(Reservation reservation);
 

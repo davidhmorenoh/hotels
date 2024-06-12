@@ -1,7 +1,7 @@
 package com.management.hotels.application.usecases.hotels;
 
 import com.management.hotels.application.dtos.responses.HotelResponse;
-import com.management.hotels.application.services.HotelService;
+import com.management.hotels.application.services.HotelApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetHotelsByUserIdUseCase {
 
-    private final HotelService hotelService;
+    private final HotelApplicationService hotelApplicationService;
 
     public List<HotelResponse> execute(Long id) {
-        return hotelService.getHotelsByUserId(id);
+        return hotelApplicationService.getHotelsByUserId(id);
     }
 
 }

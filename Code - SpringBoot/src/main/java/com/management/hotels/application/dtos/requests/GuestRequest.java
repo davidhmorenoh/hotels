@@ -19,6 +19,8 @@ public class GuestRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long guestId;
+
     @NotBlank(message = "Guest first name is mandatory")
     @Size(max = 100, message = "Guest first name must not exceed 100 characters")
     private String firstName;

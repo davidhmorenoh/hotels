@@ -23,6 +23,8 @@ public class ReservationRequest implements Serializable {
 
     private static final long SERIAL_VERSION_UID = 1L;
 
+    private Long reservationId;
+
     @NotNull(message = "Reservation check in date is mandatory")
     @FutureOrPresent(message = "Reservation check in date must be equal or after to current date")
     private Date checkInDate;

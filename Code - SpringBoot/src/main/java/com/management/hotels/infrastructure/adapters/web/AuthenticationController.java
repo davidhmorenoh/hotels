@@ -2,7 +2,7 @@ package com.management.hotels.infrastructure.adapters.web;
 
 import com.management.hotels.application.dtos.requests.AuthenticationRequest;
 import com.management.hotels.application.dtos.responses.AuthenticationResponse;
-import com.management.hotels.application.services.RevokedTokenService;
+import com.management.hotels.application.ports.services.RevokedTokenApplicationPortService;
 import com.management.hotels.application.usecases.users.LoginUserUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final LoginUserUseCase loginUserUseCase;
-    private final RevokedTokenService revokedTokenService;
+    private final RevokedTokenApplicationPortService revokedTokenApplicationPortService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> loginUser(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
@@ -24,7 +24,7 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logoutUser(@RequestHeader("Authorization") String authorizationHeader) {
-        revokedTokenService.revokeToken(authorizationHeader);
+        revokedTokenApplicationPortService.revokeToken(authorizationHeader);
         return ResponseEntity.ok("Session completed");
     }
 
