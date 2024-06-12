@@ -6,6 +6,7 @@ import com.management.hotels.domain.exceptions.hotels.HotelAlreadyDisabledExcept
 import com.management.hotels.domain.exceptions.hotels.HotelAlreadyEnabledException;
 import com.management.hotels.domain.exceptions.hotels.HotelNotFoundException;
 import com.management.hotels.domain.exceptions.reservations.BookingPreconditionsException;
+import com.management.hotels.domain.exceptions.reservations.ReservationAlreadyCancelledException;
 import com.management.hotels.domain.exceptions.reservations.ReservationNotFoundException;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyDisabledException;
 import com.management.hotels.domain.exceptions.rooms.RoomAlreadyEnabledException;
@@ -51,18 +52,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserAlreadyRegisteredException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<String> handleUserAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
-    }
-
     @ExceptionHandler({
             UserNotAuthorizedToPerformOperationException.class,
             HotelAlreadyEnabledException.class,
             HotelAlreadyDisabledException.class,
             RoomAlreadyEnabledException.class,
             RoomAlreadyDisabledException.class,
+            UserAlreadyRegisteredException.class,
+            ReservationAlreadyCancelledException.class,
             BookingPreconditionsException.class})
     @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     public ResponseEntity<String> handlePreconditionFailedException(Exception ex) {
